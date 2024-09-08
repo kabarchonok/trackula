@@ -6,9 +6,13 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "build": "pnpm run -C packages/trackula build",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
+  },
+  "dependencies": {
+    "trackula": "workspace:*"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.27.3",

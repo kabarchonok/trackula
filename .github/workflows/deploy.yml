@@ -32,6 +32,8 @@ jobs:
         uses: actions/configure-pages@v4
       - name: Install dependencies
         run: pnpm install
+      - name: Build packages
+        run: pnpm run build
       - name: Build with VitePress
         run: pnpm run docs:build
       - name: Upload artifact
