@@ -1,0 +1,26 @@
+{
+  "name": "trackula",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "Detects user interaction methods",
+  "author": "Ivan Bulakhov <https://github.com/kabarchonok>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kabarchonok/trackula.git",
+    "directory": "packages/trackula"
+  },
+  "bugs": "https://github.com/kabarchonok/trackula/issues",
+  "exports": {
+    ".": {
+      "import": "./dist/trackula.js",
+      "default": "./dist/trackula.cjs"
+    }
+  },
+  "main": "dist/trackula.cjs",
+  "module": "dist/trackula.js",
+  "scripts": {
+    "build": "vite build",
+    "build-watch": "vite build --watch"
+  }
+}

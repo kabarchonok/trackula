@@ -1,0 +1,124 @@
+/* Overrides */
+:root {
+    --vp-home-hero-image-background-image: linear-gradient(190deg, #403728, #C8B097);
+    --vp-home-hero-image-filter: blur(200px);
+
+    --vp-home-hero-name-background: var(--vp-home-hero-image-background-image);
+    --vp-home-hero-name-color: transparent;
+}
+
+.VPContent {
+    display: flex;
+    justify-content: center;
+}
+
+
+/* Components PreviewBlock */
+.preview-block {
+    background: var(--vp-c-bg-alt);
+}
+
+@media screen and (min-width: 640px) {
+    .preview-block {
+        border-radius: 8px;
+    }
+}
+
+
+/* Examples */
+:root {
+    --trackula-outline-color: transparent;
+}
+
+[data-trackula-input="mouse"] {
+    --trackula-outline-color: #e3dafd;
+}
+
+[data-trackula-input="keyboard"] {
+    --trackula-outline-color: #fddadc;
+}
+
+[data-trackula-input="touch"] {
+    --trackula-outline-color: #dafddf;
+}
+
+.dark[data-trackula-input="mouse"],
+.dark [data-trackula-input="mouse"]{
+    --trackula-outline-color: #a992ff;
+}
+
+.dark[data-trackula-input="keyboard"],
+.dark [data-trackula-input="keyboard"]{
+    --trackula-outline-color: #ff9090;
+}
+
+.dark[data-trackula-input="touch"],
+.dark [data-trackula-input="touch"]{
+    --trackula-outline-color: #98ffa1;
+}
+
+
+/* Examples Button */
+.trackula-button {
+    width: 100%;
+    padding: 12px;
+    color: var(--vp-button-brand-text);
+    background-color: var(--vp-button-brand-bg);
+    outline: none !important;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: "Press Start 2P", system-ui;
+}
+
+.trackula-button:hover {
+    color: var(--vp-button-brand-text);
+    background-color: var(--vp-button-brand-bg);
+}
+
+.trackula-button:active {
+    border-color: var(--vp-button-brand-active-border);
+    color: var(--vp-button-brand-active-text);
+    background-color: var(--vp-button-brand-active-bg);
+}
+
+.trackula-button:focus {
+    box-shadow: 0 0 0 4px var(--trackula-outline-color);
+}
+
+@media screen and (max-width: 639px) {
+    .trackula-button {
+        font-size: 13px;
+    }
+}
+
+/* Examples Input | Textarea | Select */
+.trackula-input {
+    font-family: "Press Start 2P", system-ui;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.trackula-input__control {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid var(--vp-c-border);
+    background: var(--vp-button-alt-bg);
+    border-radius: 0;
+    box-sizing: border-box;
+    font-family: 'Press Start 2P', cursive;
+    appearance: none;
+}
+
+.trackula-input__control:focus {
+    box-shadow: 0 0 0 4px var(--trackula-outline-color);
+}
+
+@media screen and (max-width: 639px) {
+    .trackula-input__label {
+        font-size: 13px;
+    }
+}
