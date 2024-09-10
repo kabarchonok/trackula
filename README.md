@@ -12,7 +12,7 @@ A JavaScript library that recognises how users interact with the interface by an
 
 ## Roadmap
 
-- [ ] Add `.d.ts` file
+- [x] ~~Add `.d.ts` file~~
 - [ ] Add support for state persistence across pages
 - [ ] Add support for ignoring specific key
 
