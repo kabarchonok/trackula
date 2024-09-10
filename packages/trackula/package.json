@@ -25,6 +25,6 @@
     "build-watch": "vite build --watch"
   },
   "devDependencies": {
-    "vite-plugin-dts": "^4.2.1"
+    "vite-plugin-dts": "4.2.1"
   }
 }
