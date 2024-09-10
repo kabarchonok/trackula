@@ -5,7 +5,7 @@ hero:
   image:
     src: '/logo.png'
   name: "Trackula"
-  text: "I know: mouse, keyboard, or touch!"
+  text: "I know: mouse, keyboard or touch!"
   tagline: 'Detects user interaction methods'
   actions:
     - theme: brand
