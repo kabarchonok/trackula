@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/kabarchonok/trackula/main/docs/public/icon.svg" width="160" height="161">
+<img src="https://raw.githubusercontent.com/kabarchonok/trackula/main/docs/public/icon.svg" alt="Trackula Logo" width="160" height="161">
 
 # Trackula
 
