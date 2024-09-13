@@ -1,25 +1,37 @@
 interface TrackulaReturnType {
   init: () => void
 
-  getInput: () => CurrentInputType
+  getInput: () => TrackulaInput
   getFocus: () => HTMLElement | null
 }
 
 interface TrackulaParams {
+  /**
+   * A container for tracking interactions.
+   * If not set, the HTML tag will be used.
+   *
+   * @type {(HTMLElement | null)}
+   * @default document.documentElement
+   */
   root?: HTMLElement | null
 
-  subscribe?: (event: any) => any
+  /**
+   * A callback function that is invoked when any event fires.
+   *
+   * @param {TrackulaInput} event - The event triggering the callback.
+   */
+  subscribe?: (event: TrackulaInput) => void
 }
 
-export type CurrentInputType = 'initial' | 'mouse' | 'keyboard' | 'touch'
+type TrackulaTrackedEvent = MouseEvent | KeyboardEvent | TouchEvent | PointerEvent
 
-const inputMap: Record<string, string> = {
+type TrackulaInput = 'initial' | 'mouse' | 'keyboard' | 'touch'
+
+const inputMap: Record<string, Exclude<TrackulaInput, 'initial'>> = {
   keydown: 'keyboard',
   keyup: 'keyboard',
   mousedown: 'mouse',
   mousemove: 'mouse',
-  pointerdown: 'pointer',
-  pointermove: 'pointer',
   touchstart: 'touch',
   touchend: 'touch',
 }
@@ -27,6 +39,8 @@ const inputMap: Record<string, string> = {
 const interactiveElements = ['button', 'input', 'select', 'textarea']
 
 export default (params?: TrackulaParams): TrackulaReturnType => {
+  console.debug('[trackula] [debug] initialization...')
+
   if (typeof document === 'undefined' || typeof window === 'undefined') {
     return {
       init: () => {},
@@ -39,16 +53,19 @@ export default (params?: TrackulaParams): TrackulaReturnType => {
   const _params: TrackulaParams = params || {}
 
   const $root = _params.root || document.documentElement
-
-  let _currentTimestamp = Date.now()
-  let _currentInput: CurrentInputType = 'initial'
-  let _currentFocus: HTMLElement | null = null
-
-  function _updateDataAttribute(type: 'input') {
-    $root.setAttribute(`data-trackula-${type}`, _currentInput)
+  if (!($root instanceof HTMLElement)) {
+    console.error('[trackula] [error] the root element is not an HTMLElement')
   }
 
-  function _isTouchInputValid(value: CurrentInputType) {
+  let _currentTimestamp = Date.now()
+  let _currentInput: TrackulaInput = 'initial'
+  let _currentFocus: HTMLElement | null = null
+
+  function _updateInputDataAttribute() {
+    $root.setAttribute(`data-trackula-input`, _currentInput)
+  }
+
+  function _isTouchInputValid(value: TrackulaInput) {
     const timestamp = Date.now()
 
     const touchIsValid
@@ -65,25 +82,44 @@ export default (params?: TrackulaParams): TrackulaReturnType => {
     return interactiveElements.includes((target as HTMLElement).nodeName)
   }
 
-  const _setInput = (event: MouseEvent | KeyboardEvent | TouchEvent | PointerEvent) => {
-    let value
-
+  function _getValueByEvent(event: TrackulaTrackedEvent): TrackulaInput {
     if (event instanceof PointerEvent) {
-      value = event.pointerType === 'mouse' ? 'mouse' : 'touch' as CurrentInputType
+      return event.pointerType === 'mouse' ? 'mouse' : 'touch'
     }
-    else {
-      value = inputMap[event.type] as CurrentInputType
+
+    // TODO: review return
+    return inputMap[event.type] || 'initial'
+  }
+
+  const _setFocus = (event: KeyboardEvent | FocusEvent) => {
+    if (!event.isTrusted) {
+      return
     }
+
+    _currentFocus = event.target as HTMLElement
+
+    console.debug(`[trackula] [debug] focus was changed to ${_currentFocus.nodeName.toLowerCase()}`)
+  }
+
+  const _setInput = (event: TrackulaTrackedEvent) => {
+    const value = _getValueByEvent(event)
 
     // Avoid false keyboard focus activation
     // if the current element was engaged in another way
     if (
-      value === 'keyboard'
+      event instanceof KeyboardEvent
+      && event.key !== 'Tab'
       && _currentInput !== 'keyboard'
       && _currentFocus === event.target
-      && (event as KeyboardEvent).key !== 'Tab'
     ) {
       return
+    }
+
+    if (
+      event instanceof KeyboardEvent
+      && (event.target && _isElementInteractive(event.target))
+    ) {
+      _setFocus(event)
     }
 
     // Avoid false mouse event when working with touch
@@ -91,24 +127,16 @@ export default (params?: TrackulaParams): TrackulaReturnType => {
       return
     }
 
-    _currentInput = value
-    if (_params.subscribe) {
-      _params.subscribe(_currentInput)
+    if (_currentInput !== value) {
+      _currentInput = value
+      _updateInputDataAttribute()
+
+      console.debug(`[trackula] [debug] input type was changed to ${_currentInput}`)
+
+      if (_params.subscribe) {
+        _params.subscribe(_currentInput)
+      }
     }
-
-    if (event.target && _isElementInteractive(event.target)) {
-      _currentFocus = event.target as HTMLElement
-    }
-
-    _updateDataAttribute('input')
-  }
-
-  const _setFocus = (event: FocusEvent) => {
-    if (!event.isTrusted) {
-      return
-    }
-
-    _currentFocus = event.target as HTMLElement
   }
 
   const _addEventListeners = () => {
@@ -131,9 +159,11 @@ export default (params?: TrackulaParams): TrackulaReturnType => {
   }
 
   const _init = () => {
-    _updateDataAttribute('input')
+    _updateInputDataAttribute()
 
     _addEventListeners()
+
+    console.debug('[trackula] [debug] initialized.')
   }
 
   return {
