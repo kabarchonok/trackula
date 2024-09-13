@@ -1,6 +1,7 @@
 <script setup>
 import DefaultTheme from 'vitepress/theme'
 import AssistantAvatar from './components/AssistantAvatar.vue'
+
 import NotFoundContent from './components/NotFoundContent.vue'
 
 const { Layout } = DefaultTheme

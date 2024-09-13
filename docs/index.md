@@ -28,4 +28,3 @@ features:
     title: Plug and Play
     details: Works seamlessly with Vue 3 and Nuxt. Integrates effortlessly into your existing project setup without needing extensive configuration or boilerplate code.
 ---
-

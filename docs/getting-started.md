@@ -41,7 +41,6 @@ The library adds `data-trackula-input` attributes to the `html` which can have t
 - `keyboard`
 - `touch`
 
-
 ### Working with methods
 
 You can also directly call the library using `.getInput` method.
@@ -52,9 +51,7 @@ const trackula = _trackula()
 trackula.init()
 
 trackula.getInput() // returns initial, mouse, keyboard, or touch depending on user behavior
-
 ```
-
 
 ### Working with styles
 

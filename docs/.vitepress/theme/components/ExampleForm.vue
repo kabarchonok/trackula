@@ -2,6 +2,7 @@
 function onSubmit(event) {
   event.preventDefault()
 
+  // eslint-disable-next-line no-alert
   alert('Et voilà!')
 }
 </script>

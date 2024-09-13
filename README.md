@@ -9,7 +9,6 @@ A JavaScript library that recognises how users interact with the interface by an
 
 [📚 **Documentation**](https://tracku.la/)
 
-
 ## Roadmap
 
 - [x] ~~Add `.d.ts` file~~

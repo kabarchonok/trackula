@@ -1,9 +1,9 @@
 <script setup>
     import { onMounted, ref } from 'vue';
-    
+
     import Assistant from './.vitepress/theme/components/Assistant.vue';
     import ExampleForm from './.vitepress/theme/components/ExampleForm.vue';
-    
+
     import _trackula from 'trackula';
     let trackula;
     const trackulaInput = ref('initial');

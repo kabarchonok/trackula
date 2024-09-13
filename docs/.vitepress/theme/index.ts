@@ -1,7 +1,9 @@
-import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
-import Layout from './Layout.vue'
+import type { Theme } from 'vitepress'
+
 import PreviewBlock from './components/PreviewBlock.vue'
+import Layout from './Layout.vue'
+
 import './index.css'
 
 export default {
