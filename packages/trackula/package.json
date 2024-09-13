@@ -21,8 +21,8 @@
   "module": "dist/trackula.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "vite build",
-    "build-watch": "vite build --watch"
+    "dev": "vite build --watch --mode development",
+    "build": "vite build"
   },
   "devDependencies": {
     "vite-plugin-dts": "4.2.1"

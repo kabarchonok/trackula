@@ -4,19 +4,28 @@ import dts from 'vite-plugin-dts'
 
 import packageJson from './package.json'
 
-export default defineConfig({
-  build: {
-    sourcemap: true,
-    minify: false,
+export default defineConfig((command) => {
+  const isProd = command.mode === 'production'
 
-    lib: {
-      entry: resolve(__dirname, './index.ts'),
-      name: packageJson.name,
-      formats: ['es', 'cjs'],
+  return {
+    build: {
+      sourcemap: true,
+      minify: 'esbuild',
+
+      lib: {
+        entry: resolve(__dirname, './index.ts'),
+        name: packageJson.name,
+        formats: ['es', 'cjs'],
+      },
     },
-  },
 
-  plugins: [
-    dts({ rollupTypes: true, tsconfigPath: './tsconfig.json' }),
-  ],
+    esbuild: {
+      // remove console.debug() in prod
+      pure: isProd ? ['console.debug'] : [],
+    },
+
+    plugins: [
+      dts({ rollupTypes: true, tsconfigPath: './tsconfig.json' }),
+    ],
+  }
 })
