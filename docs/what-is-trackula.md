@@ -12,4 +12,4 @@ For example, if the user interacts with form elements by focusing on them with t
 
 In this way, Trackula adapts to the user's current method of interacting with the interface by analysing the context and not reacting to individual events unless they indicate a change in the primary input method. This allows Trackula to more accurately track user behaviour and adapt the interface to the user's current method of interaction.
 
-You can view an [example](/examples) on the corresponding page.
+You can view an [example](/examples) on the corresponding page. You can also check out the [playground examples](https://github.com/kabarchonok/trackula/tree/main/playgrounds) in our repository.
