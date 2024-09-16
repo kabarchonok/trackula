@@ -25,6 +25,6 @@ features:
     details: Highly customizable with a wide range of parameters. Adjust behaviors, appearances, and operational modes easily.
 
   - icon: 🔌
-    title: Plug and Play
+    title: "[WIP] Plug and Play"
     details: Works seamlessly with Vue 3 and Nuxt. Integrates effortlessly into your existing project setup without needing extensive configuration or boilerplate code.
 ---
