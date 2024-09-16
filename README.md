@@ -13,6 +13,7 @@ A JavaScript library that recognises how users interact with the interface by an
 
 - [x] ~~Add `.d.ts` file~~
 - [ ] Add support for Vue 3 and Nuxt 3
+- [ ] Add stop method
 - [ ] Add support for state persistence across pages
 - [ ] Add support for ignoring specific key
 - [ ] Add support for multiple function calls
