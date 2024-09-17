@@ -18,7 +18,6 @@ export default defineConfig({
 
     nav: [
       { text: 'Guide', link: '/what-is-trackula' },
-      // { text: 'Reference', link: '/reference' },
       { text: 'Examples', link: '/examples' },
     ],
 
@@ -28,7 +27,9 @@ export default defineConfig({
         { text: 'Getting Started', link: '/getting-started' },
       ] },
 
-      // { text: 'Reference', link: '/reference' },
+      { text: 'Reference', collapsed: false, items: [
+        { text: 'trackula', link: '/reference/trackula' },
+      ] },
     ],
 
     socialLinks: [
