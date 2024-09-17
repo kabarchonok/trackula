@@ -1,11 +1,15 @@
-interface TrackulaReturnType {
+export type TrackulaInput = 'initial' | 'mouse' | 'keyboard' | 'touch'
+
+export type TrackulaTrackedEvent = MouseEvent | KeyboardEvent | TouchEvent | PointerEvent
+
+export interface TrackulaReturnType {
   init: () => void
 
   getInput: () => TrackulaInput
   getFocus: () => HTMLElement | null
 }
 
-interface TrackulaParams {
+export interface TrackulaParams {
   /**
    * A container for tracking interactions.
    * If not set, the HTML tag will be used.
@@ -22,10 +26,6 @@ interface TrackulaParams {
    */
   subscribe?: (event: TrackulaInput) => void
 }
-
-type TrackulaTrackedEvent = MouseEvent | KeyboardEvent | TouchEvent | PointerEvent
-
-type TrackulaInput = 'initial' | 'mouse' | 'keyboard' | 'touch'
 
 const inputMap: Record<string, Exclude<TrackulaInput, 'initial'>> = {
   keydown: 'keyboard',
