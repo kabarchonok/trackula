@@ -9,7 +9,7 @@ export default defineConfig((command) => {
 
   return {
     build: {
-      sourcemap: true,
+      sourcemap: !isProd,
       minify: 'esbuild',
 
       lib: {
