@@ -1,4 +1,14 @@
+declare global {
+  interface Window {
+    __TRACKULA__: {
+      subscriptions: Set<TrackulaSubscriptionCallback>
+    }
+  }
+}
+
 export type TrackulaInput = 'initial' | 'mouse' | 'keyboard' | 'touch'
+
+export type TrackulaSubscriptionCallback = ({ input }: { input: TrackulaInput }) => void
 
 export type TrackulaTrackedEvent = MouseEvent | KeyboardEvent | TouchEvent | PointerEvent
 
@@ -7,6 +17,21 @@ export interface TrackulaReturnType {
 
   getInput: () => TrackulaInput
   getFocus: () => HTMLElement | null
+
+  /**
+   * Registers a callback function that is called when event fires.
+   *
+   * @param {TrackulaSubscriptionCallback} callback
+   * @return {{stop: () => void}}
+   */
+  subscribe: (callback: TrackulaSubscriptionCallback) => {
+    /**
+     * Function on call, which stops listening to the event.
+     *
+     * @return {void}
+     */
+    stop: () => void
+  }
 }
 
 export interface TrackulaParams {
@@ -19,13 +44,6 @@ export interface TrackulaParams {
    * @experimental
    */
   root?: HTMLElement | null
-
-  /**
-   * A callback function that is invoked when any event fires.
-   *
-   * @param {TrackulaInput} event - The event triggering the callback.
-   */
-  subscribe?: (event: TrackulaInput) => void
 }
 
 const inputMap: Record<string, Exclude<TrackulaInput, 'initial'>> = {
@@ -48,8 +66,14 @@ export default (params?: TrackulaParams): TrackulaReturnType => {
 
       getInput: () => 'initial',
       getFocus: () => null,
+
+      subscribe: () => ({
+        stop: () => null,
+      }),
     }
   }
+
+  window.__TRACKULA__ = window.__TRACKULA__ || {}
 
   const _params: TrackulaParams = params || {}
 
@@ -134,8 +158,10 @@ export default (params?: TrackulaParams): TrackulaReturnType => {
 
       console.debug(`[trackula] [debug] input type was changed to ${_currentInput}`)
 
-      if (_params.subscribe) {
-        _params.subscribe(_currentInput)
+      if (window.__TRACKULA__.subscriptions) {
+        window.__TRACKULA__.subscriptions.forEach((callback) => {
+          callback({ input: _currentInput })
+        })
       }
     }
   }
@@ -167,10 +193,26 @@ export default (params?: TrackulaParams): TrackulaReturnType => {
     console.debug('[trackula] [debug] initialized.')
   }
 
+  const _subscribe = (callback: TrackulaSubscriptionCallback) => {
+    if (window.__TRACKULA__.subscriptions === undefined) {
+      window.__TRACKULA__.subscriptions = new Set()
+    }
+
+    window.__TRACKULA__.subscriptions.add(callback)
+
+    function stop() {
+      window.__TRACKULA__.subscriptions.delete(callback)
+    }
+
+    return { stop }
+  }
+
   return {
     init: () => _init(),
 
     getInput: () => _currentInput,
     getFocus: () => _currentFocus,
+
+    subscribe: callback => _subscribe(callback),
   }
 }

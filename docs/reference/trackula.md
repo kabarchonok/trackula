@@ -19,23 +19,27 @@ const container = document.getElementById('container')
 trackula({ root: container })
 ```
 
-### `subscribe?`
+## Returns
+
+### `init`
+- **Type** `() => void`
+- **Description:** A method that allows initializing the library when your application is ready. It is recommended to run it after the DOM tree is fully loaded, for example, after `DOMContentLoaded`.
+
+### `subscribe`
 - **Type:** `(event: TrackulaInput) => void`
-- **Description:** A callback function that gets triggered whenever an interaction event occurs. The event parameter provides information about the interaction.
+- **Description:** Accepts a callback function that is called when the source of interaction with the interface changes. Returns a function `stop` which, when called, will stop the execution of the provided callback function.
 
 ```typescript
 function onChange(event: TrackulaInput) {
   // ...
 }
 
-trackula({ subscribe: onChange })
+const trackula = _trackula()
+const { stop } = trackula.subscribe(onchange)
+
+// You can call the stop function to halt the execution of the callback function
+stop()
 ```
-
-## Returns
-
-### `init`
-- **Type** `() => void`
-- **Description:** A method that allows initializing the library when your application is ready. It is recommended to run it after the DOM tree is fully loaded, for example, after `DOMContentLoaded`.
 
 ### `getInput`
 - **Type** `() => TrackulaInput`
