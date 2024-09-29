@@ -2,15 +2,15 @@
 
 ## Parameters
 
-### `root?`
+### `root?` <Badge type="warning" text="experimental" />
 
 - **Type:** `HTMLElement | null`
 - **Default:** `document.documentElement`
 - **Description:** A container element where interactions will be tracked.
 If not provided, the entire HTML document (`document.documentElement`) will be used by default.
 
-:::warning
-Make sure you use the `getElementById` method instead of `querySelector` for the library to work correctly.
+:::danger
+The current implementation of the `root` parameter might affect future work, as this property will be removed soon.
 :::
 
 ```typescript

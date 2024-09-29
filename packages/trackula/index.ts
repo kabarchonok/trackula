@@ -16,6 +16,7 @@ export interface TrackulaParams {
    *
    * @type {(HTMLElement | null)}
    * @default document.documentElement
+   * @experimental
    */
   root?: HTMLElement | null
 
