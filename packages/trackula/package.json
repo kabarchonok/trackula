@@ -1,7 +1,7 @@
 {
   "name": "trackula",
   "type": "module",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Detects user interaction methods",
   "author": "Ivan Bulakhov <https://github.com/kabarchonok>",
   "license": "MIT",
@@ -11,20 +11,14 @@
     "directory": "packages/trackula"
   },
   "bugs": "https://github.com/kabarchonok/trackula/issues",
+  "sideEffects": false,
+  "types": "./index.d.ts",
   "exports": {
-    ".": {
-      "import": "./dist/trackula.js",
-      "default": "./dist/trackula.cjs"
-    }
+    ".": "./index.js",
+    "./package.json": "./package.json"
   },
-  "main": "dist/trackula.cjs",
-  "module": "dist/trackula.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "dev": "vite build --watch --mode development",
     "build": "vite build"
-  },
-  "devDependencies": {
-    "vite-plugin-dts": "4.2.1"
   }
 }
